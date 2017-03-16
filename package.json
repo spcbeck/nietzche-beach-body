@@ -1,0 +1,22 @@
+{
+  "name": "nietzche-beach-body",
+  "version": "1.0.0",
+  "description": "Nietzche Beach Body Twitter Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spcbeck/nietzche-beach-body.git"
+  },
+  "author": "Sean Beck",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spcbeck/nietzche-beach-body/issues"
+  },
+  "homepage": "https://github.com/spcbeck/nietzche-beach-body#readme",
+  "dependencies": {
+    "twit": "^2.2.5"
+  }
+}
