@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/spcbeck/nietzche-beach-body#readme",
   "dependencies": {
+    "async": "^2.1.5",
     "twit": "^2.2.5"
   }
 }
