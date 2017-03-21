@@ -1,4 +1,5 @@
 var rp = require('request-promise');
+var $ = require('cheerio');
 
 module.exports = {
 	searchWikiquote: function(cb) { 
@@ -6,8 +7,8 @@ module.exports = {
 		    uri: 'https://en.wikiquote.org/w/api.php',
 		    qs: {
 		    	format: 'json',
-		        action: 'query', // -> uri + '?access_token=xxxxx%20xxxxx'
-		        titles: 'Nietzsche'
+		        action: 'query',
+		        titles: 'Friedrich Nietzsche'
 		    },
 		    headers: {
 		        'User-Agent': 'Request-Promise'
@@ -23,8 +24,6 @@ module.exports = {
 		    		var page = pages[p];
 		    	}
 
-		    	console.log(page.pageid);
-
 		    	cb(null, page.pageid);
 		    })
 		    .catch(function (err) {
@@ -39,8 +38,9 @@ module.exports = {
 			qs: {
 				format: 'json',
 				action: 'parse',
-				prop: 'sections',
-				pageid: pageID
+				noimages: '',
+				pageid: pageID,
+				section: 1
 			},
 			headers: {
 		        'User-Agent': 'Request-Promise'
@@ -50,18 +50,19 @@ module.exports = {
 
 		rp(options)
 			.then(function (result) {
-				var sectionArray = [];
-				var sections = result.parse.sections;
+				var quotes = result.parse.text["*"];
+				var quotesArray = [];
 
-				console.log(result);
+				$('li > b', quotes).each(function(i, elem) {
 
-				for(var s in sections) {
+					quotesArray[i] = $(this).text().split(",");
 					
-				}
-				
+				});
+
+				cb(null, quotesArray);
 			})
 			.catch(function (err) {
-				console.log("it no workie");
+				console.log("it no workie:" + err);
 			})
 	}
 }
