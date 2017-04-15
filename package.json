@@ -1,7 +1,7 @@
 {
-  "name": "nietzche-beach-body",
+  "name": "beatzche",
   "version": "1.0.0",
-  "description": "Nietzche Beach Body Twitter Bot",
+  "description": "Nietzche Beach Twitter Bot",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
