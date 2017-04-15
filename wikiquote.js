@@ -28,11 +28,11 @@ module.exports = {
 		    })
 		    .catch(function (err) {
 		        // API call failed...
-		        console.log("it no workie");
+		        console.log("error: " + err);
 		    });
 	},
 
-	getQuotes: function(pageID, cb) {
+	getWikiQuotes: function(pageID, cb) {
 		var options = {
 			uri: 'https://en.wikiquote.org/w/api.php',
 			qs: {
@@ -62,7 +62,7 @@ module.exports = {
 				cb(null, quotesArray);
 			})
 			.catch(function (err) {
-				console.log("it no workie:" + err);
+				console.log("error: " + err);
 			})
 	}
 }

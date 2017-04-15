@@ -2,6 +2,7 @@ var Twit = require("twit");
 var async = require("async");
 var wikiquote = require("./wikiquote");
 var rp = require('request-promise');
+var cheerio = require('cheerio');
 
 /*var t = new Twit({
   consumer_key          : process.env.NIETZCHE_TWIT_CONSUMER_KEY,
@@ -10,12 +11,53 @@ var rp = require('request-promise');
   access_token_secret   : process.env.NIETZCHE_TWIT_ACCESS_TOKEN_SECRET
 });*/
 
+crawlBeachQuotes = function(nietzcheQutoes, cb) {
+	var options = {
+	    uri: "http://stylishlyme.com/stylish-life/beach-quotes/",
+	    transform: function (body) {
+	        return cheerio.load(body);
+	    }
+	};
+
+	rp(options)
+	    .then(function (result) {
+	    	var $ = result;
+	    	var quotesArray = [];
+
+	    	$(".entry-content > p").each(function(i,elem) {
+	    		quotesArray[i] = $(this).text().split(",");
+	    	});
+
+	    	cb(null, quotesArray, nietzcheQutoes);
+	
+	    })
+	    .catch(function (err) {
+	        // Crawling failed or Cheerio choked...
+	        console.log(err);
+	    });
+}
+
+function randomIntFromInterval(min,max)
+{
+    return Math.floor(Math.random()*(max-min+1)+min);
+}
+
+formQuote = function(beachQuotes, nietzcheQuotes, cb) {
+	var nietzcheQuote = nietzcheQuotes[randomIntFromInterval(0, nietzcheQuotes.length)];
+	var beachQuote = beachQuotes[randomIntFromInterval(0, beachQuotes.length)];
+
+	var quote = nietzcheQuote + " " + beachQuote;
+
+	console.log(quote);
+}
 
 run = function() {
 
 	async.waterfall([
 		wikiquote.searchWikiquote,
-		wikiquote.getQuotes
+		wikiquote.getWikiQuotes,
+		crawlBeachQuotes,
+		formQuote
 	],
 	function(err) {
 		if (err) {
@@ -26,4 +68,9 @@ run = function() {
 	});
 }
 
-run();
+try {
+	run();
+}
+catch (e) {
+	console.log(e);
+}
