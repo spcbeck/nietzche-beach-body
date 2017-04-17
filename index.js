@@ -48,7 +48,14 @@ formQuote = function(beachQuotes, nietzcheQuotes, cb) {
 
 	var quote = nietzcheQuote + " " + beachQuote;
 
-	console.log(quote);
+	cb(null, quote);
+}
+
+tweetQuote = function(quote, cb) {
+	t.post('statuses/update', { status: 'beatzche' }, function(err, data, response) {
+	  console.log(data);
+	  console.log(response);
+	})
 }
 
 run = function() {
@@ -57,7 +64,8 @@ run = function() {
 		wikiquote.searchWikiquote,
 		wikiquote.getWikiQuotes,
 		crawlBeachQuotes,
-		formQuote
+		formQuote,
+		tweetQuote
 	],
 	function(err) {
 		if (err) {
