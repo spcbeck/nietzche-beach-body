@@ -52,8 +52,7 @@ formQuote = function(beachQuotes, nietzcheQuotes, cb) {
 }
 
 tweetQuote = function(quote, cb) {
-	t.post('statuses/update', { status: 'beatzche' }, function(err, data, response) {
-	  console.log(data);
+	t.post('statuses/update', { status: quote }, function(err, data, response) {
 	  console.log(response);
 	})
 }
