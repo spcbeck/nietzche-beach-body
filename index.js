@@ -48,12 +48,21 @@ formQuote = function(beachQuotes, nietzcheQuotes, cb) {
 
 	var quote = nietzcheQuote + " " + beachQuote;
 
+	while(quote.length >= 140) {
+		nietzcheQuote = nietzcheQuotes[randomIntFromInterval(0, nietzcheQuotes.length)];
+		beachQuote = beachQuotes[randomIntFromInterval(0, beachQuotes.length)];
+
+		quote = nietzcheQuote + " " + beachQuote;
+	}
+
+	console.log(quote);
+
 	cb(null, quote);
 }
 
 tweetQuote = function(quote, cb) {
 	t.post('statuses/update', { status: quote }, function(err, data, response) {
-	  console.log(response);
+	  console.log(data);
 	})
 }
 
