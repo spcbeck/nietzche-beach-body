@@ -55,8 +55,6 @@ formQuote = function(beachQuotes, nietzcheQuotes, cb) {
 		quote = nietzcheQuote + " " + beachQuote;
 	}
 
-	console.log(quote);
-
 	cb(null, quote);
 }
 
@@ -84,9 +82,11 @@ run = function() {
 	});
 }
 
-try {
-	run();
-}
-catch (e) {
-	console.log(e);
-}
+setInterval(function() {
+  try {
+    run();
+  }
+  catch (e) {
+    console.log(e);
+  }
+}, 60000 * 60);
