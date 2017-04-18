@@ -82,6 +82,13 @@ run = function() {
 	});
 }
 
+try {
+	run();
+}
+catch (e) {
+	console.log(e);
+}
+
 setInterval(function() {
   try {
     run();
