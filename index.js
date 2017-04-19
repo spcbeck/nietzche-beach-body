@@ -3,6 +3,7 @@ var async = require("async");
 var wikiquote = require("./wikiquote");
 var rp = require('request-promise');
 var cheerio = require('cheerio');
+var http = require('http');
 
 var t = new Twit({
   consumer_key          : process.env.TWIT_CONSUMER_KEY,
@@ -97,3 +98,8 @@ setInterval(function() {
     console.log(e);
   }
 }, 60000 * 60);
+ 
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+	res.send('twitter bot engaged');
+}).listen(process.env.PORT || 5000);
