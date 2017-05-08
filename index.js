@@ -26,7 +26,7 @@ crawlBeachQuotes = function(nietzcheQutoes, cb) {
 	    	var quotesArray = [];
 
 	    	$(".entry-content > p").each(function(i,elem) {
-	    		quotesArray[i] = $(this).text().split(",");
+	    		quotesArray[i] = $(this).text().split(".");
 	    	});
 
 	    	cb(null, quotesArray, nietzcheQutoes);
@@ -47,13 +47,26 @@ formQuote = function(beachQuotes, nietzcheQuotes, cb) {
 	var nietzcheQuote = nietzcheQuotes[randomIntFromInterval(0, nietzcheQuotes.length)];
 	var beachQuote = beachQuotes[randomIntFromInterval(0, beachQuotes.length)];
 
-	var quote = nietzcheQuote + " " + beachQuote;
+	beachQuote[0] = beachQuote[0].split('—')[0]
 
-	while(quote.length >= 140) {
+	if(randomIntFromInterval(0, 1) == 0) {
+		var quote = nietzcheQuote + " " + beachQuote;
+	} else {
+		var quote = beachQuote + " " + nietzcheQuote;
+	}
+
+
+	while(quote.length >= 140 || beachQuote[0] == "") {
 		nietzcheQuote = nietzcheQuotes[randomIntFromInterval(0, nietzcheQuotes.length)];
 		beachQuote = beachQuotes[randomIntFromInterval(0, beachQuotes.length)];
 
-		quote = nietzcheQuote + " " + beachQuote;
+		beachQuote[0] = beachQuote[0].split('—')[0]
+
+		if(randomIntFromInterval(0, 1) == 0) {
+			var quote = nietzcheQuote + " " + beachQuote;
+		} else {
+			var quote = beachQuote + " " + nietzcheQuote;
+		}
 	}
 
 	cb(null, quote);
